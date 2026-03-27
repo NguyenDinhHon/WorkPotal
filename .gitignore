@@ -2,6 +2,9 @@
 **/bin/
 **/obj/
 
+# Secrets (do not commit)
+**/appsettings.Secrets.json
+
 # OS / IDE noise
 Thumbs.db
 Desktop.ini
