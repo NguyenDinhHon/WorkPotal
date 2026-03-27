@@ -1,0 +1,11 @@
+.vs/
+**/bin/
+**/obj/
+
+# OS / IDE noise
+Thumbs.db
+Desktop.ini
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
