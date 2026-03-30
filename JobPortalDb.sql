@@ -1,4 +1,3 @@
--- style(shared-data): conflict-ready local change
 USE [master]
 
 GO

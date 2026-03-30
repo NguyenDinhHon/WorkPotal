@@ -1,5 +1,4 @@
-/* style(shared-data): conflict-ready local change */
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.FileProviders;
 
 namespace JobPortal.Common
