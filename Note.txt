@@ -1,0 +1,22 @@
+Tài khoản admin
+admin@gmail.com
+Abc123!@#
+
+Tài khoản user
+userfinal@gmail.com
+Abc123!@#
+
+Tài khoản Employer
+employer@gmail.com
+Trungthanh2030@
+
+Employers: fptsoftware@gmail.com, vietteldigital@gmail.com, vng@gmail.com, grabvietnam@gmail.com
+Candidates: nguyenvanan@gmail.com, tranthilan@gmail.com, levancuong@gmail.com
+
+
+Những gì đã thay đổi trong SearchController.cs:
+Trước	Sau
+Tìm kiếm	job.Name.Contains(q)	Tách từng từ khóa, tìm trên 5 trường
+Tiếng Việt	❌ "lap trinh" ≠ "Lập trình"	✅ Bỏ dấu để so sánh
+Nhiều từ	❌ "java backend" không khớp	✅ Tìm từng từ riêng lẻ
+Kết quả	Không phân biệt quan trọng	✅ Sắp xếp theo điểm liên quan
