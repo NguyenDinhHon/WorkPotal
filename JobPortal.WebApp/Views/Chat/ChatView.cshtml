@@ -1,0 +1,22 @@
+﻿@model List<Message>
+@{
+    int currentUserId = (int)ViewBag.CurrentUserId;
+    int sessionId = (int)ViewBag.SessionId;
+}
+
+<div class="chatbox border rounded p-3" style="height: 400px; overflow-y: scroll">
+    @foreach (var msg in Model)
+    {
+        <div style="text-align:@(msg.SenderId == currentUserId ? "right" : "left")">
+            <div style="display:inline-block; background:@(msg.SenderId == currentUserId ? "#dcf8c6" : "#f1f0f0"); padding: 8px; border-radius: 10px; margin: 5px">
+                @msg.Content <small class="text-muted">@msg.SentAt.ToShortTimeString()</small>
+            </div>
+        </div>
+    }
+</div>
+
+<form asp-action="SendMessage" method="post" class="mt-2 d-flex">
+    <input type="hidden" name="chatSessionId" value="@sessionId" />
+    <input type="text" name="content" class="form-control" placeholder="Nhập tin nhắn..." />
+    <button type="submit" class="btn btn-primary ms-2">Gửi</button>
+</form>
