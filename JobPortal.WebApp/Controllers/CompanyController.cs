@@ -56,7 +56,7 @@ namespace JobPortal.WebApp.Controllers
         }
 
         [Route("{slug}")]
-        public async Task<IActionResult> Detail(string slug, bool showMap = false)
+        public async Task<IActionResult> Detail(string slug, bool showMap = false, string? mapKeyword = null, int radiusKm = 5)
         {
             var random = new Random();
 
@@ -105,6 +105,19 @@ namespace JobPortal.WebApp.Controllers
             ViewBag.MapEmbedUrl = $"https://maps.google.com/maps?hl=vi&q={encodedQuery}&z=15&output=embed";
             ViewBag.MapOpenUrl = $"https://www.google.com/maps/search/?api=1&query={encodedQuery}";
             ViewBag.ShowMap = showMap;
+            ViewBag.MapKeyword = mapKeyword ?? string.Empty;
+
+            // WP-16 (partial): allow a manual "search in this map area" trigger.
+            // This keeps the flow lightweight and does not require replacing iframe by Maps JS.
+            var safeRadius = radiusKm;
+            if (safeRadius < 1) safeRadius = 1;
+            if (safeRadius > 50) safeRadius = 50;
+            ViewBag.RadiusKm = safeRadius;
+
+            var nearbyQuery = string.IsNullOrWhiteSpace(mapKeyword)
+                ? $"viec lam gan {mapQuery}"
+                : $"{mapKeyword} gan {mapQuery} ban kinh {safeRadius}km";
+            ViewBag.MapNearbyJobsUrl = $"https://www.google.com/maps/search/?api=1&query={Uri.EscapeDataString(nearbyQuery)}";
 
             employer.Popular++;
             await _context.SaveChangesAsync();

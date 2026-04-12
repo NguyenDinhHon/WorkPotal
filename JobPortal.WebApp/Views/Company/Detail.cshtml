@@ -71,6 +71,24 @@
                         <p>@Html.Raw(Model.Contact)</p>
 
                         <h6 id="company-map">Company map:</h6>
+                        <form method="get" action="/company/@Model.Slug" style="margin-bottom: 10px;">
+                            <input type="hidden" name="showMap" value="true" />
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                                <input
+                                    type="text"
+                                    name="mapKeyword"
+                                    value="@ViewBag.MapKeyword"
+                                    placeholder="Vi du: developer, tester..."
+                                    style="min-width: 220px; flex: 1; border: 1px solid #ced4da; border-radius: 6px; padding: 8px 10px;" />
+                                <select name="radiusKm" style="border: 1px solid #ced4da; border-radius: 6px; padding: 8px 10px;">
+                                    <option value="3" selected="@(Convert.ToInt32(ViewBag.RadiusKm) == 3)">3km</option>
+                                    <option value="5" selected="@(Convert.ToInt32(ViewBag.RadiusKm) == 5)">5km</option>
+                                    <option value="10" selected="@(Convert.ToInt32(ViewBag.RadiusKm) == 10)">10km</option>
+                                    <option value="20" selected="@(Convert.ToInt32(ViewBag.RadiusKm) == 20)">20km</option>
+                                </select>
+                                <button type="submit" class="primary-btn" style="line-height: 38px; height: 38px; border: 0;">Tim trong vung ban do nay</button>
+                            </div>
+                        </form>
                         <div style="border-radius: 10px; overflow: hidden; border: 1px solid #e9ecef; margin-top: 8px;">
                             <iframe
                                 src="@ViewBag.MapEmbedUrl"
@@ -85,6 +103,8 @@
                         </div>
                         <p style="margin-top: 10px; margin-bottom: 0;">
                             <a target="_blank" rel="noopener noreferrer" href="@ViewBag.MapOpenUrl" style="font-weight: 600; color: #007bff;">Mo tren Google Maps</a>
+                            <span style="margin: 0 8px; color: #6c757d;">|</span>
+                            <a target="_blank" rel="noopener noreferrer" href="@ViewBag.MapNearbyJobsUrl" style="font-weight: 600; color: #007bff;">Mo tim viec lam theo vung nay</a>
                         </p>
                         
                     </div>
