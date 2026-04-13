@@ -33,5 +33,32 @@ namespace JobPortal.WebApp.Controllers
             return sb.ToString().Normalize(NormalizationForm.FormC)
                 .Replace('đ', 'd').Replace('Đ', 'D').ToLower();
         }
+
+        private static string StripHtml(string html)
+        {
+            return Regex.Replace(html, "<.*?>", " ");
+        }
+
+        // Tính điểm liên quan: tên job (10đ), title/skill (5đ), mô tả/employer (2đ)
+        private static int CalculateScore(Job job, string[] normalizedKeywords)
+        {
+            int score = 0;
+            string jobName     = NormalizeText(job.Name);
+            string jobTitle    = NormalizeText(job.Title?.Name ?? "");
+            string jobSkills   = NormalizeText(string.Join(" ", job.Skills.Select(s => s.Name)));
+            string jobIntro    = NormalizeText(StripHtml(job.Introduce ?? ""));
+            string jobEmployer = NormalizeText(job.AppUser?.FullName ?? "");
+
+            foreach (var keyword in normalizedKeywords)
+            {
+                if (string.IsNullOrEmpty(keyword)) continue;
+                if (jobName.Contains(keyword))     score += 10;
+                if (jobTitle.Contains(keyword))    score += 5;
+                if (jobSkills.Contains(keyword))   score += 5;
+                if (jobIntro.Contains(keyword))    score += 2;
+                if (jobEmployer.Contains(keyword)) score += 2;
+            }
+            return score;
+        }
     }
 }
